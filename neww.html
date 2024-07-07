@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Dhoni</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #e0f7fa;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            margin: 0 auto;
+            max-width: 600px;
+            height: 350px;
+        }
+
+        h1 {
+            margin-top: none;
+        }
+        #startButton {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 10px 20px;
+            font-size: 12px;
+            background-color: #0288d1;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #startButton:hover {
+            background-color: #0277bd;
+        }
+
+        .ball {
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 100px;
+            left: -50px;
+            display: none;
+            transition: left 0.5s ease, bottom 0.5s ease;
+        }
+
+        .stumps {
+            position: absolute;
+            bottom: 0;
+            left: calc(50% - 75px);
+            display: flex;
+            justify-content: space-between;
+            width: 150px;
+            height: 200px;
+        }
+
+        .stump {
+            width: 30px;
+            height: 200px;
+            background-color: #8B4513;
+            border-radius: 5px;
+            transition: transform 1s;
+        }
+
+        .stump.broken-left {
+            transform: rotate(-90deg) translateY(-150px);
+            transition: transform 1s ease-in-out;
+        }
+
+        .stump.broken-right {
+            transform: rotate(90deg) translateY(-150px);
+            transition: transform 1s ease-in-out;
+        }
+
+        .stump.broken-middle {
+            transform: rotate(180deg) translateY(-150px);
+            transition: transform 1s ease-in-out;
+        }
+
+        .message {
+            margin-top: none;
+            margin-bottom: none;
+            font-size: 20px;
+            color: #d32f2f;
+            display: none;
+        }
+
+        .sliding-container {
+            display: flex;
+            max-width: 1500px;
+            margin: 0 auto;
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .dhoni-photos {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .dhoni-photos img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #cccccc;
+            border-radius: 5px;
+            position: absolute;
+            left: 50%; /* Start from the center */
+            transform: translateX(-50%); /* Center horizontally */
+            opacity: 0;
+            transition: opacity 1s, transform 1s; /* Transition for opacity and transform */
+        }
+
+        /* Ensure images and container content are of the same height */
+        .dhoni-photos img {
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <p>Click the button to see the action</p>
+    <button id="startButton">Start</button>
+
+    <div class="container" id="container">
+        <div class="ball" id="ball"></div>
+        <div class="stumps" id="stumps">
+            <div class="stump" id="leftStump"></div>
+            <div class="stump" id="middleStump"></div>
+            <div class="stump" id="rightStump"></div>
+        </div>
+    </div>
+
+    <div class="message" id="message">
+        <h3>It's OUT! Happy Birthday Dhoni!</h3>
+        <p>43 years to the Captain cool<p>
+    </div>
+
+    <div class="sliding-container" id="slidingContainer">
+        <div class="dhoni-photos" id="dhoniPhotos">
+            <img src="https://feeds.abplive.com/onecms/images/uploaded-images/2023/04/12/51badb32bd98d49bcefb79025297f10c1681294485840625_original.jpg" alt="Dhoni">
+            <img src="https://bsmedia.business-standard.com/_media/bs/img/misc/2020-09/23/full/20200923010L.jpg" alt="Dhoni">
+            <img src="https://ss-i.thgim.com/public/cricket/aee15l/article66727571.ece/alternates/LANDSCAPE_1200/dhoni.jpg" alt="Dhoni">
+            <img src="https://i.pinimg.com/736x/e8/d9/7c/e8d97c4123a70d2d3dbdd5a1cf695f09.jpg" alt="Left Slide Image">
+            <img src="https://c.ndtvimg.com/2020-01/9082127g_ms-dhoni_625x300_19_January_20.jpg?output-quality=60&output-format=webp&downsize=639:*" alt="Right Slide Image">
+            <img src="https://timesofsports.com/wp-content/uploads/2020/08/Dhoni-4.png" alt="Right Slide Image">
+            <img src="https://th.bing.com/th/id/OIP.AT0twPfYeQ6iKtP7k9Y4hgE8DF?rs=1&pid=ImgDetMain" alt="Right Slide Image">
+            <img src="https://im.rediff.com/cricket/2014/oct/03dhoni-csk1.jpg" alt="Right Slide Image">
+            <img src="https://ik.imagekit.io/j83rchiauw/A_List_Star/ms-dhoni-biography.png" alt="Right Slide Image">
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', function() {
+            const ball = document.getElementById('ball');
+            const leftStump = document.getElementById('leftStump');
+            const middleStump = document.getElementById('middleStump');
+            const rightStump = document.getElementById('rightStump');
+            const message = document.getElementById('message');
+            const dhoniPhotos = document.getElementById('dhoniPhotos');
+            const container = document.getElementById('container');
+            const images = dhoniPhotos.querySelectorAll('img');
+
+            ball.style.display = 'block';
+            ball.style.left = '-50px';
+            ball.style.bottom = '100px';
+
+            let position = -50;
+            const interval = setInterval(function() {
+                if (position >= window.innerWidth / 2 - 75) {
+                    clearInterval(interval);
+                    ball.style.left = position + 'px';
+                    ball.style.transition = 'none';
+
+                    // Animate stumps breaking
+                    leftStump.classList.add('broken-left');
+                    middleStump.classList.add('broken-middle');
+                    rightStump.classList.add('broken-right');
+
+                    setTimeout(() => {
+                        // Hide stumps container after the animation
+                        container.style.opacity = '0';
+                        message.style.display = 'block';
+                        container.style.display = "none";
+                        dhoniPhotos.style.display = 'block';
+                        slideImages();
+                    }, 1000);
+                } else {
+                    position += 10;
+                    ball.style.left = position + 'px';
+                }
+            }, 20);
+
+            function slideImages() {
+                let currentImage = 0;
+
+                const showNextImage = () => {
+                    if (currentImage >= images.length) return;
+
+                    const img = images[currentImage];
+                    img.style.opacity = '1'; // Show current image
+                    img.style.transform = 'translateX(-50%)'; // Center image horizontally
+
+                    currentImage++;
+
+                    // Set timeout to fade out after 3 seconds (adjust timing as needed)
+                    setTimeout(() => {
+                        img.style.opacity = '0';
+                        if (currentImage % 2 === 0) {
+                            img.style.transform = 'translateX(100%)'; // Slide out image to the right
+                        } else {
+                            img.style.transform = 'translateX(-100%)'; // Slide out image to the left
+                        }
+                        setTimeout(() => {
+                            showNextImage();
+                        }, 1000); // Delay before moving to next image
+                    }, 1000); // Adjust timing as needed
+                };
+
+                // Start slideshow
+                showNextImage();
+            }
+        });
+    </script>
+</body>
+</html>
